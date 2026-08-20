@@ -52,7 +52,7 @@ class GeminiProvider(LLMProvider):
     def __init__(self):
         from google import genai
         self._client = genai.Client(api_key=settings.google_api_key)
-        self._model = "models/gemini-2.5-flash"
+        self._model = "gemini-2.5-flash"
         logger.info("llm_provider", provider="gemini", model=self._model)
 
     def chat(self, messages: List[dict], max_tokens: int = 500, temperature: float = 0.4) -> str:

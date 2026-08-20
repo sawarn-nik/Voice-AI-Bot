@@ -27,7 +27,6 @@ import time
 from typing import Dict, List, Optional, Tuple
 from collections import defaultdict
 
-import openai
 
 from q4_live_insights.models import (
     DetectedSignal,
@@ -126,7 +125,8 @@ class NudgeEngine:
         self._last_nudge_time: Dict[SignalType, float] = defaultdict(float)
         self._signal_occurrence_count: Dict[SignalType, int] = defaultdict(int)
         self._active_nudges: List[Nudge] = []
-        self._llm_client = openai.OpenAI(api_key=settings.openai_api_key)
+        from shared.providers import get_llm_router
+        self._llm_client = get_llm_router()
 
     def process_signals(
         self,
@@ -288,14 +288,18 @@ class NudgeEngine:
                 f"- body: 1-2 sentence actionable recommendation for the agent\n"
                 f"Respond with JSON only."
             )
-            resp = self._llm_client.chat.completions.create(
-                model="gpt-4o-mini",
+            raw = self._llm_client.chat(
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.3,
                 max_tokens=100,
-                response_format={"type": "json_object"},
             )
-            data = json_safe_loads(resp.choices[0].message.content)
+            # Strip markdown fences if present
+            raw = raw.strip()
+            if raw.startswith("```"):
+                raw = raw.split("```")[1]
+                if raw.startswith("json"):
+                    raw = raw[4:]
+            data = json_safe_loads(raw.strip())
             return data.get("headline", signal.signal_type.value), data.get("body", signal.trigger_text)
         except Exception as e:
             logger.error("nudge_llm_error", error=str(e))

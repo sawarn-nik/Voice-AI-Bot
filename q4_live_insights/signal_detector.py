@@ -34,7 +34,6 @@ import time
 import json
 from typing import List, Optional, Tuple
 
-import openai
 
 from q4_live_insights.models import (
     TranscriptChunk,
@@ -249,15 +248,11 @@ If no signals are present, return: {{"signals": []}}
 
 
 class LLMSignalDetector:
-    """Nuanced LLM-based signal detector. Uses Groq (free) or OpenAI."""
+    """Nuanced LLM-based signal detector. Uses LLMRouter (Groq → Gemini fallback)."""
 
     def __init__(self, batch_size: int = 3):
-        if settings.groq_api_key:
-            from groq import Groq
-            self._client = Groq(api_key=settings.groq_api_key)
-            self._model = "llama-3.1-8b-instant"  # fastest Groq model for monitoring        else:
-            self._client = openai.OpenAI(api_key=settings.openai_api_key)
-            self._model = "gpt-4o-mini"
+        from shared.providers import get_llm_router
+        self._llm = get_llm_router()
         self.batch_size = batch_size
         self._chunk_counter = 0
 
@@ -282,22 +277,21 @@ class LLMSignalDetector:
 
         t0 = time.perf_counter()
         try:
-            response = self._client.chat.completions.create(
-                model=self._model,
-                messages=[
-                    {
-                        "role": "user",
-                        "content": LLM_SIGNAL_PROMPT.format(transcript=transcript),
-                    }
-                ],
-                temperature=0.1,
+            prompt = LLM_SIGNAL_PROMPT.format(transcript=transcript)
+            raw = self._llm.chat(
+                messages=[{"role": "user", "content": prompt}],
                 max_tokens=400,
-                response_format={"type": "json_object"},
+                temperature=0.1,
             )
             llm_latency_ms = (time.perf_counter() - t0) * 1000
 
-            content = response.choices[0].message.content
-            data = json.loads(content)
+            # Strip markdown code fences if present
+            raw = raw.strip()
+            if raw.startswith("```"):
+                raw = raw.split("```")[1]
+                if raw.startswith("json"):
+                    raw = raw[4:]
+            data = json.loads(raw.strip())
             signals = []
 
             for item in data.get("signals", []):
