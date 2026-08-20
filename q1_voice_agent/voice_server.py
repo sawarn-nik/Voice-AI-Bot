@@ -76,74 +76,53 @@ async def voice_ws(websocket: WebSocket, session_id: str):
             message = await websocket.receive()
 
             if "bytes" in message and message["bytes"]:
-                # Accumulate audio chunks
-                audio_buffer.extend(message["bytes"])
+                # Complete audio blob sent as single binary message after mic release
+                audio_bytes = message["bytes"]
+                if len(audio_bytes) < 2000:
+                    await _send_status(websocket, "listening")
+                    continue
+
+                await _send_status(websocket, "transcribing")
+
+                transcript = await asyncio.get_event_loop().run_in_executor(
+                    None,
+                    lambda ab=audio_bytes: _stt.transcribe(ab, language="en", filename="audio.webm"),
+                )
+
+
+                if not transcript or len(transcript.strip()) < 2:
+                    await _send_status(websocket, "listening")
+                    continue
+
+                await websocket.send_text(json.dumps({
+                    "type": "transcript", "text": transcript, "speaker": "user",
+                }))
+                await _send_status(websocket, "thinking")
+
+                response_text = agent.respond(transcript)
+
+                await websocket.send_text(json.dumps({
+                    "type": "transcript", "text": response_text, "speaker": "aria",
+                }))
+                await _send_audio(websocket, response_text)
+
+                await websocket.send_text(json.dumps({
+                    "type": "lead", "data": agent.state.lead.to_crm_dict(),
+                }))
+
+                if agent.state.stage in ("done", "escalated"):
+                    upsert_lead(agent.get_lead_crm_payload())
+                    await websocket.send_text(json.dumps({
+                        "type": "outcome",
+                        "outcome": agent.state.outcome,
+                        "summary": agent.get_call_summary(),
+                    }))
+
+                await _send_status(websocket, "listening")
 
             elif "text" in message:
                 data = json.loads(message["text"])
-
-                if data.get("type") == "end_of_speech":
-                    # Browser signals end of utterance — transcribe accumulated audio
-                    if len(audio_buffer) < 3000:
-                        audio_buffer.clear()
-                        continue
-
-                    await _send_status(websocket, "transcribing")
-
-                    audio_bytes = bytes(audio_buffer)
-                    audio_buffer.clear()
-
-                    # STT
-                    transcript = await asyncio.get_event_loop().run_in_executor(
-                        None,
-                        lambda: _stt.transcribe(audio_bytes, language="en", filename="audio.webm"),
-                    )
-
-                    if not transcript or len(transcript.strip()) < 2:
-                        await _send_status(websocket, "listening")
-                        continue
-
-                    # Send user transcript to UI
-                    await websocket.send_text(json.dumps({
-                        "type": "transcript",
-                        "text": transcript,
-                        "speaker": "user",
-                    }))
-
-                    await _send_status(websocket, "thinking")
-
-                    # Agent response
-                    response_text = agent.respond(transcript)
-
-                    # Send agent transcript
-                    await websocket.send_text(json.dumps({
-                        "type": "transcript",
-                        "text": response_text,
-                        "speaker": "aria",
-                    }))
-
-                    # TTS + send audio
-                    await _send_audio(websocket, response_text)
-
-                    # Send lead state update
-                    await websocket.send_text(json.dumps({
-                        "type": "lead",
-                        "data": agent.state.lead.to_crm_dict(),
-                    }))
-
-                    # Check outcome
-                    if agent.state.stage in ("done", "escalated"):
-                        payload = agent.get_lead_crm_payload()
-                        upsert_lead(payload)
-                        await websocket.send_text(json.dumps({
-                            "type": "outcome",
-                            "outcome": agent.state.outcome,
-                            "summary": agent.get_call_summary(),
-                        }))
-
-                    await _send_status(websocket, "listening")
-
-                elif data.get("type") == "ping":
+                if data.get("type") == "ping":
                     await websocket.send_text(json.dumps({"type": "pong"}))
 
     except WebSocketDisconnect:
