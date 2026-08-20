@@ -1,0 +1,52 @@
+# Secrets — NEVER commit
+.env
+*.pem
+*.key
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Generated KB data (re-run ingest.py to rebuild)
+q2_knowledge_base/data/cleaned/
+q2_knowledge_base/embeddings/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Audio files (too large for repo — reference in docs)
+*.wav
+*.mp3
+*.ogg
+*.mulaw
+Require.md
+
+# Database (contains lead data)
+darwix.db
+
+# Qdrant local storage (re-run ingest to rebuild)
+q2_knowledge_base/embeddings/

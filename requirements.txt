@@ -1,0 +1,68 @@
+# ============================================================
+# Darwix AI Voice Agent — Python Dependencies
+# Tested on Python 3.11
+# ============================================================
+
+# Web framework & server
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+websockets==12.0
+httpx==0.27.0
+
+# AI / LLM
+openai==1.30.1
+tiktoken==0.7.0
+langchain==0.2.5
+langchain-openai==0.1.8
+langchain-community==0.2.5
+
+# Vector DB
+pinecone-client==4.1.0
+qdrant-client==1.9.1
+
+# ASR / TTS
+deepgram-sdk==3.4.0
+elevenlabs==1.2.1
+
+# Telephony
+twilio==9.1.0
+
+# Audio processing (optional — only needed for local mic input)
+# pyaudio==0.2.14       # requires portaudio + Python <=3.12
+# sounddevice==0.4.7    # requires portaudio
+numpy==1.26.4
+pydub==0.25.1
+
+# Data processing & KB
+pandas==2.2.2
+beautifulsoup4==4.12.3
+lxml==5.2.2
+pypdf2==3.0.1
+pdfplumber==0.11.1
+python-docx==1.1.2
+requests==2.32.3
+trafilatura==1.12.0
+
+# Text processing
+rapidfuzz==3.9.3
+langdetect==1.0.9
+# sentence-transformers  # optional — only needed if swapping to local embeddings
+# spacy                  # optional — only needed for NER, not used in core pipeline
+
+# Caching / state
+redis==5.0.4
+python-dotenv==1.0.1
+
+# Utilities
+pydantic==2.7.2
+pydantic-settings==2.3.0
+python-multipart==0.0.9
+aiofiles==23.2.1
+structlog==24.2.0
+rich==13.7.1
+typer==0.12.3
+
+# Testing
+pytest==8.2.2
+pytest-asyncio==0.23.7
+pytest-mock==3.14.0

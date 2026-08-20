@@ -1,0 +1,62 @@
+[
+  {
+    "source_id": "web_001",
+    "source_type": "website",
+    "url": "https://example-insurer.com/health-plans",
+    "raw_text": "Home | About Us | Contact | Login\nHealth Insurance Plans\nWe offer three tiers: Basic, Standard, and Premium.\nBasic Plan: Covers hospitalisation up to PHP 100,000 per year. No outpatient benefit. Premium: PHP 1,200/month.\nStandard Plan: Hospitalisation up to PHP 300,000/year plus outpatient consultations (up to 6 visits). Premium: PHP 2,500/month.\nPremium Plan: Hospitalisation up to PHP 1,000,000/year, outpatient, dental, and vision. Premium: PHP 4,800/month.\nAll plans include a 30-day free-look period.\nFooter: Privacy Policy | Terms | Cookie Policy © 2024 ExampleInsurer Inc."
+  },
+  {
+    "source_id": "web_002",
+    "source_type": "website",
+    "url": "https://example-insurer.com/eligibility",
+    "raw_text": "Navigation: Home Plans Eligibility Claims\nEligibility Requirements\nApplicants must be between 18 and 65 years of age at the time of application.\nPre-existing conditions are covered after a 12-month waiting period for Standard and Premium plans.\nBasic plan excludes pre-existing conditions entirely.\nApplicants with a BMI over 40 require additional medical underwriting.\nSmokers are eligible but pay a 15% loading on the base premium.\nGroup plans available for companies with 5 or more employees.\nSite Map | Accessibility | © 2024 ExampleInsurer"
+  },
+  {
+    "source_id": "web_003",
+    "source_type": "website",
+    "url": "https://example-insurer.com/faqs",
+    "raw_text": "FAQ — Frequently Asked Questions\nQ: How do I file a claim?\nA: Submit your claim via the mobile app or call 1-800-555-0100. Claims must be filed within 60 days of the medical event.\nQ: Can I add dependants?\nA: Yes. Spouse and children under 21 can be added. Each dependent adds 60% of the primary member's premium.\nQ: What is not covered?\nA: Cosmetic procedures, experimental treatments, and self-inflicted injuries are excluded.\nQ: Is there a waiting period?\nA: Yes. A 30-day general waiting period applies to all plans. Pre-existing conditions: 12 months for Standard/Premium, excluded on Basic.\nQ: How do I cancel?\nA: Call customer service or use the app. Refunds are prorated within the 30-day free-look window.\nFAQ updated: March 2024\nFooter links here."
+  },
+  {
+    "source_id": "web_004",
+    "source_type": "website",
+    "url": "https://example-insurer.com/faqs",
+    "raw_text": "FAQ — Frequently Asked Questions\nQ: How do I file a claim?\nA: Submit your claim via the mobile app or call 1-800-555-0100. Claims must be filed within 60 days of the medical event.\nQ: Can I add dependants?\nA: Yes. Spouse and children under 21 can be added. Each dependent adds 60% of the primary member's premium.\nQ: What is not covered?\nA: Cosmetic procedures, experimental treatments, and self-inflicted injuries are excluded.\nFAQ updated: March 2024"
+  },
+  {
+    "source_id": "pdf_001",
+    "source_type": "pdf",
+    "url": "internal://policy_doc_v2.pdf",
+    "raw_text": "POLICY DOCUMENT — HEALTH INSURANCE\nSection 1: Definitions\nInsured Person means the individual named on the certificate of insurance.\nBenefit Period means one calendar year from the policy effective date.\nSection 2: Hospitalisation Benefit\nThe insurer will reimburse reasonable and customary charges for inpatient hospital stays exceeding 24 hours. ICU stays are covered at 150% of the standard daily benefit up to the annual limit.\nSection 3: Outpatient Benefit (Standard and Premium only)\nOutpatient consultations with a licensed GP or specialist are reimbursed up to PHP 1,500 per visit, maximum 6 visits per benefit period for Standard, unlimited for Premium.\nSection 4: Exclusions\n4.1 Pre-existing conditions (see waiting period clauses).\n4.2 Cosmetic or elective surgery not medically necessary.\n4.3 Dental (unless Premium plan or add-on purchased).\n4.4 Experimental drugs or treatments not approved by the FDA.\n4.5 Injuries resulting from war, riot, or self-infliction.\nSection 5: Claims Procedure\nNotify insurer within 48 hours of hospitalisation. Submit documents within 60 days. Required documents: medical certificate, itemised bill, proof of payment.\nSection 6: Renewal and Cancellation\nPolicies auto-renew annually. Premium adjustments communicated 30 days prior. Free-look cancellation within 30 days of issuance for full refund minus admin fees."
+  },
+  {
+    "source_id": "web_005",
+    "source_type": "website",
+    "url": "https://example-insurer.com/objection-handling-guide",
+    "raw_text": "Internal Guide: Handling Common Objections\nObjection: The premium is too expensive.\nResponse: We understand budget matters. Our Basic plan starts at PHP 1,200/month — less than PHP 40/day. It covers hospitalisation up to PHP 100,000 which can easily offset a single hospital stay.\nObjection: I already have company insurance.\nResponse: Company plans often have gaps — they may not cover dependants fully or lapse when you leave the job. A personal plan ensures continuity.\nObjection: I'm young and healthy, I don't need insurance.\nResponse: Most of our claims come from members aged 25–40 for accidents and sudden illnesses. The best time to lock in a low premium is when you're healthy.\nObjection: I'll think about it.\nResponse: Absolutely, take your time. Note that premiums are age-banded so waiting increases your cost. Would it be okay to schedule a follow-up call?\nObjection: I don't trust insurance companies.\nResponse: We're regulated by the Insurance Commission and have a claims settlement ratio of 94% in 2023."
+  },
+  {
+    "source_id": "web_006",
+    "source_type": "website",
+    "url": "https://example-insurer.com/branch-partners",
+    "raw_text": "Branch Partner Program\nOperational, marketing, and technology support is provided to branch partners. Partners earn a 15% commission on first-year premiums and 5% on renewals. Training is provided quarterly. Partners must maintain a minimum sales target of 10 policies per quarter.\n© 2024 ExampleInsurer"
+  },
+  {
+    "source_id": "csv_001",
+    "source_type": "table",
+    "url": "internal://plan_comparison.csv",
+    "raw_text": "Plan,Monthly Premium,Annual Hospitalisation Limit,Outpatient,Dental,Vision,Pre-existing Waiting Period\nBasic,PHP 1200,PHP 100000,No,No,No,Excluded\nStandard,PHP 2500,PHP 300000,6 visits/year,No,No,12 months\nPremium,PHP 4800,PHP 1000000,Unlimited,Yes,Yes,12 months"
+  },
+  {
+    "source_id": "web_007",
+    "source_type": "website",
+    "url": "https://example-insurer.com/contact",
+    "raw_text": "Contact Us\nCustomer Hotline: 1-800-555-0100 (Mon–Fri 8am–8pm)\nEmail: support@example-insurer.com\nHead Office: 123 Insurance Tower, Makati City, Philippines\nFor claims: claims@example-insurer.com\nFor partnerships: partners@example-insurer.com\nFooter nav here."
+  },
+  {
+    "source_id": "pii_sample_001",
+    "source_type": "form",
+    "url": "internal://lead_form_submissions.csv",
+    "raw_text": "Name: Juan dela Cruz, DOB: 1985-03-12, Mobile: 09171234567, Email: juan@example.com, Plan Interest: Standard, Smoker: No, BMI: 24"
+  }
+]
